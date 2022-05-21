@@ -19,4 +19,13 @@ describe(isNameAvailable, () => {
     fetchMock.mockResponseOnce('', { status: 200 });
     expect(await isNameAvailable('vue')).toBe(false);
   });
+
+  it('memoizes query results', async () => {
+    fetchMock.mockResponse('', { status: 404 });
+
+    await isNameAvailable('tln');
+    await isNameAvailable('tln');
+
+    expect(fetchMock.mock.calls.length).toBeLessThanOrEqual(1);
+  });
 });
