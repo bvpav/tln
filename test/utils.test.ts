@@ -14,11 +14,7 @@ describe(get3UniqueChars, () => {
     expect(
       get3UniqueChars()
         .split('')
-        .find(
-          (c) =>
-            c.charCodeAt(0) < 'a'.charCodeAt(0) ||
-            c.charCodeAt(0) > 'z'.charCodeAt(0)
-        )
+        .find((c) => c.match(/[^a-z]/))
     ).toBeUndefined();
   });
 });
@@ -32,11 +28,7 @@ describe(get3Chars, () => {
     expect(
       get3UniqueChars()
         .split('')
-        .find(
-          (c) =>
-            c.charCodeAt(0) < 'a'.charCodeAt(0) ||
-            c.charCodeAt(0) > 'z'.charCodeAt(0)
-        )
+        .find((c) => c.match(/[^a-z]/))
     ).toBeUndefined();
   });
 });
