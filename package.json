@@ -2,8 +2,10 @@
   "name": "tln",
   "version": "1.0.0",
   "description": "Generate an available three-letter npm package name.",
-  "main": "dist/tln.cjs.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "repository": {
