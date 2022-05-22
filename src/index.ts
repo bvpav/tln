@@ -24,8 +24,6 @@ export async function availableNames(
 ) {
   const maxLen = options.uniqueLetters ? 26 * 25 * 24 : 26 ** 3;
   if (count < 0 || count > maxLen) {
-    console.log(count);
-
     throw new Error(`Invalid count. Must be a number from 0 to ${maxLen}`);
   }
 
