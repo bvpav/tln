@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import { get3Chars, get3UniqueChars } from './utils';
 
 const REGISTRY_URL = 'https://registry.npmjs.org';
 
@@ -11,4 +12,30 @@ export async function isNameAvailable(name: string): Promise<boolean> {
     namesMemo.set(name, available);
   }
   return namesMemo.get(name)!;
+}
+
+type AvailableNamesOptions = {
+  uniqueLetters: boolean;
+};
+
+export async function availableNames(
+  count: number,
+  options: AvailableNamesOptions = { uniqueLetters: true }
+) {
+  const maxLen = options.uniqueLetters ? 26 * 25 * 24 : 26 ** 3;
+  if (count < 0 || count > maxLen) {
+    console.log(count);
+
+    throw new Error(`Invalid count. Must be a number from 0 to ${maxLen}`);
+  }
+
+  const names = new Set<string>();
+  for (let i = 0; i < count; i++) {
+    let name: string;
+    do {
+      name = options.uniqueLetters ? get3UniqueChars() : get3Chars();
+    } while (names.has(name) || !isNameAvailable(name));
+    names.add(name);
+  }
+  return [...names];
 }
