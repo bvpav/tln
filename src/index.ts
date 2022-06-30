@@ -30,9 +30,12 @@ export async function availableNames(
   const names = new Set<string>();
   for (let i = 0; i < count; i++) {
     let name: string;
+    let isAvailable = false;
     do {
       name = options.uniqueLetters ? get3UniqueChars() : get3Chars();
-    } while (names.has(name) || !isNameAvailable(name));
+      if (names.has(name)) continue;
+      isAvailable = await isNameAvailable(name);
+    } while (!isAvailable);
     names.add(name);
   }
   return [...names];

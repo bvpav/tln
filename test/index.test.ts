@@ -1,11 +1,21 @@
 import fetchMock from 'jest-fetch-mock';
 import { availableNames, isNameAvailable } from '../src';
+import { get3Chars, get3UniqueChars } from '../src/utils';
+
+const get3CharsMock = get3Chars as jest.MockedFunction<typeof get3Chars>;
+const get3UniqueCharsMock = get3UniqueChars as jest.MockedFunction<
+  typeof get3UniqueChars
+>;
+
+jest.mock('../src/utils');
 
 beforeAll(() => {
   fetchMock.enableMocks();
 });
 beforeEach(() => {
   fetchMock.resetMocks();
+  get3CharsMock.mockReset();
+  get3UniqueCharsMock.mockReset();
 });
 afterAll(() => {
   fetchMock.disableMocks();
@@ -32,6 +42,22 @@ describe(isNameAvailable, () => {
 
 describe(availableNames, () => {
   it('obeys given length', async () => {
+    // FIXME: mocked utils always return `undefined`
+    get3CharsMock
+      .mockReturnValueOnce('aaa')
+      .mockReturnValueOnce('aab')
+      .mockReturnValueOnce('abc')
+      .mockReturnValueOnce('abd')
+      .mockReturnValueOnce('abx')
+      .mockReturnValue('acc');
+    get3UniqueCharsMock
+      .mockReturnValueOnce('abc')
+      .mockReturnValueOnce('acb')
+      .mockReturnValueOnce('abd')
+      .mockReturnValueOnce('abx')
+      .mockReturnValueOnce('aby')
+      .mockReturnValue('aco');
+
     fetchMock.mockResponse('', { status: 404 });
     expect((await availableNames(1)).length).toBe(1);
     expect((await availableNames(3)).length).toBe(3);
@@ -46,5 +72,60 @@ describe(availableNames, () => {
     expect(
       availableNames(26 * 26 * 26 + 1, { uniqueLetters: false })
     ).rejects.toThrowError();
+  });
+
+  it('only returns available names', async () => {
+    fetchMock.mockResponse(async (res) => {
+      const pkgName = res.url.substring(res.url.lastIndexOf('/') + 1);
+      if (['vue', 'ayu', 'del', 'osb', 'rwe'].includes(pkgName)) {
+        return { body: '', init: { status: 200 } };
+      } else {
+        return { body: '', init: { status: 404 } };
+      }
+    });
+    get3CharsMock
+      .mockReturnValueOnce('vue')
+      .mockReturnValueOnce('ayu')
+      .mockReturnValueOnce('del')
+      .mockReturnValueOnce('osb')
+      .mockReturnValueOnce('rwe')
+      .mockReturnValue('avl');
+    get3UniqueCharsMock
+      .mockReturnValueOnce('vue')
+      .mockReturnValueOnce('ayu')
+      .mockReturnValueOnce('del')
+      .mockReturnValueOnce('osb')
+      .mockReturnValueOnce('rwe')
+      .mockReturnValue('avl');
+
+    expect((await availableNames(1))[0]).toBe('avl');
+    expect((await availableNames(1, { uniqueLetters: true }))[0]).toBe('avl');
+  });
+
+  it('calls the apropriate random characters generation function', async () => {
+    fetchMock.mockResponse('', { status: 404 });
+
+    // FIXME: mocked utils always return `undefined`
+    get3CharsMock
+      .mockReturnValueOnce('aaa')
+      .mockReturnValueOnce('aab')
+      .mockReturnValueOnce('abc')
+      .mockReturnValueOnce('abd')
+      .mockReturnValueOnce('abx')
+      .mockReturnValue('acc');
+    get3UniqueCharsMock.mockReset();
+    get3UniqueCharsMock
+      .mockReturnValueOnce('abc')
+      .mockReturnValueOnce('acb')
+      .mockReturnValueOnce('abd')
+      .mockReturnValueOnce('abx')
+      .mockReturnValueOnce('aby')
+      .mockReturnValue('aco');
+
+    await availableNames(3, { uniqueLetters: false });
+    expect(get3CharsMock.mock.calls.length).toBe(3);
+
+    await availableNames(3, { uniqueLetters: true });
+    expect(get3UniqueCharsMock.mock.calls.length).toBe(3);
   });
 });
