@@ -23,8 +23,8 @@ export async function availableNames(
   options: AvailableNamesOptions = { uniqueLetters: true }
 ) {
   const maxLen = options.uniqueLetters ? 26 * 25 * 24 : 26 ** 3;
-  if (count < 0 || count > maxLen) {
-    throw new Error(`Invalid count. Must be a number from 0 to ${maxLen}`);
+  if (count <= 0 || count > maxLen) {
+    throw new Error(`Invalid count. Must be a number from 1 to ${maxLen}`);
   }
 
   const names = new Set<string>();

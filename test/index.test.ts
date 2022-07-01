@@ -66,6 +66,7 @@ describe(availableNames, () => {
   it('errors on invalid lengths', async () => {
     fetchMock.mockResponse('', { status: 404 });
     expect(() => availableNames(-10)).rejects.toThrowError();
+    expect(() => availableNames(0)).rejects.toThrowError();
     expect(() =>
       availableNames(26 * 25 * 24 + 1, { uniqueLetters: true })
     ).rejects.toThrowError();
