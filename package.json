@@ -5,6 +5,10 @@
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "bin": "dist/cli/tln.js",
+  "files": [
+    "dist/*",
+    "cli/*"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest"
