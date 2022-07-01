@@ -1,4 +1,4 @@
-import { get3Chars, get3UniqueChars } from '../src/utils';
+import { get3Chars, get3UniqueChars } from '../lib/utils';
 
 describe(get3UniqueChars, () => {
   it('generates exactly 3 chars', () => {

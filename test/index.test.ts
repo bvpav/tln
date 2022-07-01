@@ -1,13 +1,13 @@
 import fetchMock from 'jest-fetch-mock';
-import { availableNames, isNameAvailable } from '../src';
-import { get3Chars, get3UniqueChars } from '../src/utils';
+import { availableNames, isNameAvailable } from '../lib';
+import { get3Chars, get3UniqueChars } from '../lib/utils';
 
 const get3CharsMock = get3Chars as jest.MockedFunction<typeof get3Chars>;
 const get3UniqueCharsMock = get3UniqueChars as jest.MockedFunction<
   typeof get3UniqueChars
 >;
 
-jest.mock('../src/utils');
+jest.mock('../lib/utils');
 
 beforeAll(() => {
   fetchMock.enableMocks();
