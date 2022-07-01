@@ -128,4 +128,16 @@ describe(availableNames, () => {
     await availableNames(3, { uniqueLetters: true });
     expect(get3UniqueCharsMock.mock.calls.length).toBe(3);
   });
+
+  it('returns unique names', async () => {
+    fetchMock.mockResponse('', { status: 404 });
+    get3UniqueCharsMock
+      .mockReturnValueOnce('asd')
+      .mockReturnValueOnce('asd')
+      .mockReturnValueOnce('xyz')
+      .mockReturnValueOnce('ghd');
+
+    const names = await availableNames(3);
+    expect(new Set(names).size).toBe(names.length);
+  });
 });

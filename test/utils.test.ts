@@ -7,7 +7,7 @@ describe(get3UniqueChars, () => {
 
   it('returns unique chars', () => {
     const chars = get3UniqueChars();
-    expect(chars[0] === chars[1] && chars[1] === chars[2]).toBe(false);
+    expect(new Set(chars).size).toBe(chars.length);
   });
 
   it('only returns lowercase alphabet characters', () => {
