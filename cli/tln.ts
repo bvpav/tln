@@ -42,7 +42,22 @@ ${NPM_WEBSITE}/package/${argv.check}`
     }
   }
 
-  const names = await availableNames(argv.n);
+  if (typeof argv.n !== 'number') {
+    argv.n = 0;
+  }
+
+  let names: string[];
+  try {
+    names = await availableNames(argv.n);
+  } catch (e) {
+    if (e instanceof Error && e.message.startsWith('Invalid count.')) {
+      console.error(e.message);
+    } else {
+      console.error(e);
+    }
+    process.exit(1);
+  }
+
   names.map((name) => console.log(name));
 }
 
