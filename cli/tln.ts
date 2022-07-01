@@ -6,10 +6,18 @@ import { availableNames, isNameAvailable } from '../lib';
 function usage() {
   console.error(
     `
+tln - Generate available 3-letter npm package names.
+
 usage: tln
-       tln -n <count>
-       tln -c <name>
+       tln [-n|--count] <count>
+       tln [-c|--check] <name>
        tln [-h|--help]
+
+options:
+    -n, --count [COUNT]     The number of names to generate.
+    -c, --check [NAME]      Check if NAME is an available package name on npm.
+    -u, --unique-letters    Only generate names with unique letters.
+    -h, --help              Show this message.
   `.trim()
   );
   return process.exit(1);
@@ -19,9 +27,10 @@ const NPM_WEBSITE = 'https://npmjs.com';
 
 async function main() {
   const argv = minimist(process.argv.slice(2), {
-    default: { n: 1 },
-    alias: { h: 'help', c: 'check' },
+    default: { n: 1, u: false },
+    alias: { h: 'help', c: 'check', n: 'count', u: 'unique-letters' },
     string: ['c'],
+    boolean: ['u'],
   });
 
   if (argv.help) {
@@ -48,7 +57,9 @@ ${NPM_WEBSITE}/package/${argv.check}`
 
   let names: string[];
   try {
-    names = await availableNames(argv.n);
+    names = await availableNames(argv.n, {
+      uniqueLetters: argv.u,
+    });
   } catch (e) {
     if (e instanceof Error && e.message.startsWith('Invalid count.')) {
       console.error(e.message);
