@@ -2,8 +2,9 @@
   "name": "tln",
   "version": "1.0.0",
   "description": "Generate an available three-letter npm package name.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "bin": "dist/cli/tln.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -27,12 +28,14 @@
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.36",
     "@types/jest": "^27.5.1",
+    "@types/minimist": "^1.2.2",
     "jest": "^28.1.0",
     "jest-fetch-mock": "^3.0.3",
     "ts-jest": "^28.0.2",
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0"
+    "isomorphic-fetch": "^3.0.0",
+    "minimist": "^1.2.6"
   }
 }
