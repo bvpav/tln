@@ -84,7 +84,7 @@ const myNames = await tln.availableNames(3);
 Generate unique available names.
 
 - `count`: the `number` of names to be generated
-- `options.uniqueLetters`: a `boolean`, if `true`, only generate names, only containing unique letters
+- `options.uniqueLetters`: a `boolean`, if `true`, only generate names, only containing unique letters (default: `true`)
 
 Returns a `Promise<string[]>` of size `count`, containing the generated names.
 
