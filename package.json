@@ -4,7 +4,7 @@
   "description": "Generate an available three-letter npm package name.",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
-  "bin": "dist/cli/tln.js",
+  "bin": "dist/cli/launch.js",
   "files": [
     "dist/*",
     "cli/*"
