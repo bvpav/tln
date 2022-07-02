@@ -6,7 +6,7 @@ import { availableNames, isNameAvailable } from '../lib';
 function usage() {
   console.error(
     `
-tln - Generate available 3-letter npm package names.
+tln - Generate available three-letter npm package names.
 
 usage: tln
        tln [-n|--count] <count>
@@ -14,8 +14,8 @@ usage: tln
        tln [-h|--help]
 
 options:
-    -n, --count [COUNT]     The number of names to generate.
-    -c, --check [NAME]      Check if NAME is an available package name on npm.
+    -n, --count <count>     The number of names to generate.
+    -c, --check <name>      Check if NAME is an available package name on npm.
     -u, --unique-letters    Only generate names with unique letters.
     -h, --help              Show this message.
   `.trim()
