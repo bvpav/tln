@@ -1,10 +1,10 @@
-# Three-Letter Name
+# Three-Letter Name (`tln`)
 
-**The npm package registry is running out of three-letter names!** The shortage has created a competitive environment for aspiring JavaScript library and framework creators. Today might be your last chance to take your three-letter package name for your new incredible library/framework, but fear not - `tln` has got your back.
+**The npm package registry is running out of three-letter names!** The shortage has created a competitive environment for aspiring JavaScript library and framework creators. Today might be your last chance to claim your three-letter package name for your new incredible library/framework, but fear not - `tln` is here for you.
 
 To generate your very own (still) available three-letter npm package name, simply run:
 
-```shell
+```console
 $ npx tln
 fgu
 ```
@@ -13,7 +13,7 @@ It might take a second to find the perfect three-letter name for you, as most of
 
 You can also generate multiple names at a time:
 
-```shell
+```console
 $ npx tln -n 6
 jco
 blw
@@ -23,9 +23,11 @@ yzn
 wnn
 ```
 
+> Pass the `-u` flag to only get unique letters in names.
+
 Or you can check the availability of any npm package name:
 
-```shell
+```console
 $ npx tln -c 'tln'
 Name tln is taken:
 https://npmjs.com/package/tln
@@ -33,7 +35,7 @@ https://npmjs.com/package/tln
 
 For all possible options, run `tln` with the `-h` flag:
 
-```shell
+```console
 $ npx tln -h
 tln - Generate available three-letter npm package names.
 
@@ -53,7 +55,7 @@ options:
 
 For advanced usage, `tln` may be installed as a library using:
 
-```shell
+```console
 $ npm i tln
 ```
 
@@ -70,7 +72,6 @@ Or inside CommonJS modules:
 
 ```js
 const tln = require('tln');
-
 // ...
 const myNames = await tln.availableNames(3);
 // ...
@@ -91,7 +92,7 @@ Returns a `Promise<string[]>` of size `count`, containing the generated names.
 
 Check if `name` is available on the npm package registry.
 
-- `name` a `string`, the name to check
+- `name`: a `string`, the name to check
 
 Returns a `Promise<boolean>`, which is `true` if `name` is available on the npm registry and `false` if it is registered.
 
